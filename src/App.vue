@@ -91,11 +91,14 @@ export default {
   },
   methods: {
     questionAnsweredHandle(is_correct) {
-      console.log(is_correct)
       this.questionsAnswered++
       if (is_correct) {
         this.totalCorrect++
       }
+    },
+    reset() {
+      this.questionsAnswered = 0
+      this.totalCorrect = 0
     }
   }
 }
@@ -103,11 +106,14 @@ export default {
 
 <template>
   <div class="ctr">
-    <questions v-if="questionsAnswered < questions.length" :questions="questions" :questionsAnswered="questionsAnswered"
-      @question-answered="questionAnsweredHandle">
-    </questions>
-    <result v-else :correctAnswers="totalCorrect"></result>
-    <button type="button" class="reset-btn">Reset</button>
+    <transition name="fade" mode="out-in">
+      <questions v-if="questionsAnswered < questions.length" :questions="questions" :questionsAnswered="questionsAnswered"
+        @question-answered="questionAnsweredHandle">
+      </questions>
+      <result v-else :correctAnswers="totalCorrect" :results="results"></result>
+    </transition>
+    <button type="button" class="reset-btn" @click.prevent="reset"
+      v-if="questionsAnswered == questions.length">Reset</button>
   </div>
 </template>
 
