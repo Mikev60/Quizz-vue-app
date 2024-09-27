@@ -84,7 +84,8 @@ export default {
           title: "Wow, you're a genius!",
           desc: "Studying has definitely paid off for you!"
         }
-      ]
+      ],
+      questionsAnswered: 0,
     }
   }
 }
@@ -92,8 +93,8 @@ export default {
 
 <template>
   <div class="ctr">
-    <questions></questions>
-    <result></result>
+    <questions v-if="questionsAnswered < questions.length" :questions="questions"></questions>
+    <result v-else></result>
     <button type="button" class="reset-btn">Reset</button>
   </div>
 </template>
