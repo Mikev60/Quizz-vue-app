@@ -86,6 +86,16 @@ export default {
         }
       ],
       questionsAnswered: 0,
+      totalCorrect: 0
+    }
+  },
+  methods: {
+    questionAnsweredHandle(is_correct) {
+      console.log(is_correct)
+      this.questionsAnswered++
+      if (is_correct) {
+        this.totalCorrect++
+      }
     }
   }
 }
@@ -93,8 +103,10 @@ export default {
 
 <template>
   <div class="ctr">
-    <questions v-if="questionsAnswered < questions.length" :questions="questions"></questions>
-    <result v-else></result>
+    <questions v-if="questionsAnswered < questions.length" :questions="questions" :questionsAnswered="questionsAnswered"
+      @question-answered="questionAnsweredHandle">
+    </questions>
+    <result v-else :correctAnswers="totalCorrect"></result>
     <button type="button" class="reset-btn">Reset</button>
   </div>
 </template>
